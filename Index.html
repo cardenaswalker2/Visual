@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduManager Elite | Sistema Institucional</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+
+    <div id="toast-container"></div>
+
+    <div class="app-shell">
+
+        <aside class="app-sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <div class="brand-icon"><i class="fas fa-shield-halved"></i></div>
+                <span>EduManager<small>Elite</small></span>
+            </div>
+            <nav class="sidebar-menu">
+                <button class="menu-item active" onclick="nav('home')">
+                    <i class="fas fa-home"></i> <span>Dashboard</span>
+                </button>
+                <button class="menu-item" onclick="nav('docentes')">
+                    <i class="fas fa-user-tie"></i> <span>Docentes</span>
+                </button>
+                <button class="menu-item" onclick="nav('asignaturas')">
+                    <i class="fas fa-book"></i> <span>Asignaturas</span>
+                </button>
+                <button class="menu-item" onclick="nav('pqrs')">
+                    <i class="fas fa-comment-dots"></i> <span>PQRS</span>
+                </button>
+            </nav>
+            <div class="sidebar-footer">
+                <p>© 2024 Gestión Educativa</p>
+            </div>
+        </aside>
+
+
+        <main class="app-main">
+            <header class="app-header">
+                <div class="header-left">
+                    <button id="mobile-toggle" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
+                    <h2 id="page-title">Dashboard</h2>
+                </div>
+                <div class="header-right">
+                    <div class="user-pill">
+                        <img src="https://ui-avatars.com/api/?name=Rectora&background=6366f1&color=fff" alt="Avatar">
+                        <span>Rectora Principal</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="app-content">
+
+                <section id="sec-home" class="page-view active">
+                    <div class="grid-stats">
+                        <div class="glass-card stat">
+                            <i class="fas fa-users color-1"></i>
+                            <div>
+                                <h3 id="stat-doc">0</h3>
+                                <p>Plantilla Docente</p>
+                            </div>
+                        </div>
+                        <div class="glass-card stat">
+                            <i class="fas fa-bookmark color-2"></i>
+                            <div>
+                                <h3 id="stat-asig">0</h3>
+                                <p>Materias Activas</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="glass-card chart-box">
+                        <h4>Actividad Institucional</h4>
+                        <div class="fake-chart">
+                            <div class="bar" style="height: 60%"></div>
+                            <div class="bar" style="height: 80%"></div>
+                            <div class="bar" style="height: 40%"></div>
+                            <div class="bar" style="height: 90%"></div>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="sec-docentes" class="page-view">
+                    <div class="action-bar">
+                        <div class="search-wrapper">
+                            <i class="fas fa-search"></i>
+                            <input type="text" placeholder="Buscar docente..." onkeyup="searchDocente(this.value)">
+                        </div>
+                        <button class="btn btn-primary" onclick="openModal('modal-docente')">
+                            <i class="fas fa-plus"></i> Nuevo Docente
+                        </button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="premium-table">
+                            <thead>
+                                <tr>
+                                    <th>Docente</th>
+                                    <th>Identificación</th>
+                                    <th>Especialidad</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="lista-docentes"></tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section id="sec-asignaturas" class="page-view">
+                    <div class="action-bar">
+                        <h3>Asignación Académica</h3>
+                        <button class="btn btn-primary" onclick="openModal('modal-materia')">Asignar Materia</button>
+                    </div>
+                    <div class="grid-cards" id="lista-materias"></div>
+                </section>
+
+                <section id="sec-pqrs" class="page-view">
+                    <div class="pqrs-container">
+                        <div class="glass-card">
+                            <h3>Radicar PQRS</h3>
+                            <form id="form-pqrs" class="grid-form">
+                                <input type="text" placeholder="Nombre completo" required>
+                                <select required>
+                                    <option value="">Tipo de Trámite</option>
+                                    <option>Petición</option>
+                                    <option>Queja</option>
+                                    <option>Reclamo</option>
+                                </select>
+                                <textarea placeholder="Describa los hechos..." rows="4" required></textarea>
+                                <button type="submit" class="btn btn-primary">Enviar Radicado</button>
+                            </form>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+
+    <div id="modal-docente" class="modal">
+        <div class="modal-content">
+            <h3>Registrar Docente</h3>
+            <form id="docente-form">
+                <div class="input-group">
+                    <label>Nombre Completo</label>
+                    <input type="text" id="d-nombre" required>
+                </div>
+                <div class="input-group">
+                    <label>Cédula</label>
+                    <input type="text" id="d-id" required>
+                </div>
+                <div class="input-group">
+                    <label>Área de Enseñanza</label>
+                    <input type="text" id="d-especialidad" required>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-ghost" onclick="closeModal('modal-docente')">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar Registro</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="modal-materia" class="modal">
+        <div class="modal-content">
+            <h3>Nueva Asignatura</h3>
+            <form id="materia-form">
+                <input type="text" id="m-nombre" placeholder="Nombre de la Materia" required>
+                <input type="text" id="m-grado" placeholder="Grado" required>
+                <select id="m-docente" required></select>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-ghost" onclick="closeModal('modal-materia')">Cerrar</button>
+                    <button type="submit" class="btn btn-primary">Confirmar Asignación</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
